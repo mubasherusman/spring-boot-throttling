@@ -1,24 +1,17 @@
 package com.weddini.throttling.autoconfigure;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ConfigurationProperties(prefix = "spring.throttling")
 public class ThrottlingProperties {
 
-    private Integer lruCacheCapacity;
+    private static final int DEFAULT_LRU_CACHE_CAPACITY = 10000;
 
-    public ThrottlingProperties() {
-    }
-
-    public ThrottlingProperties(Integer lruCacheCapacity) {
-        this.lruCacheCapacity = lruCacheCapacity;
-    }
-
-    public Integer getLruCacheCapacity() {
-        return lruCacheCapacity;
-    }
-
-    public void setLruCacheCapacity(Integer lruCacheCapacity) {
-        this.lruCacheCapacity = lruCacheCapacity;
-    }
+    private int lruCacheCapacity = DEFAULT_LRU_CACHE_CAPACITY;
 }
