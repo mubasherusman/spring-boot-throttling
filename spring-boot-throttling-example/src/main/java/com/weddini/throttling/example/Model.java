@@ -1,10 +1,8 @@
 package com.weddini.throttling.example;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-@Builder
-@Getter
-public class Model {
-    private String userName;
+@Data
+class Model {
+    private final String userName;
 }

@@ -1,9 +1,56 @@
 package com.weddini.throttling.example;
 
-public interface DemoService {
-    Model computeWithSpElThrottling(Model model);
+import com.weddini.throttling.Throttling;
+import com.weddini.throttling.ThrottlingType;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-    Model computeWithHttpHeaderThrottling(Model model);
+import java.util.concurrent.TimeUnit;
 
-    Model computeWithHttpRemoteAddrThrottling(Model model);
+@Slf4j
+@Service
+public class DemoService {
+
+    /**
+     * Throttling configuration:
+     * <p>
+     * allow 3 method calls per minute
+     * for each userName in model object
+     * passed as parameter
+     */
+    @Throttling(limit = 3,
+        timeUnit = TimeUnit.MINUTES,
+        type = ThrottlingType.SpEL,
+        expression = "#model.userName")
+    Model computeWithSpElThrottling(Model model) {
+        log.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
+        return model;
+    }
+
+    /**
+     * Throttling configuration:
+     * <p>
+     * allow 10 method calls per minute
+     * for each unique {@code javax.servlet.http.HttpServletRequest#getHeader()}
+     */
+    @Throttling(limit = 10,
+        timeUnit = TimeUnit.MINUTES,
+        type = ThrottlingType.HeaderValue,
+        headerName = "X-Forwarded-For")
+    Model computeWithHttpHeaderThrottling(Model model) {
+        log.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
+        return model;
+    }
+
+    /**
+     * Throttling configuration:
+     * <p>
+     * allow 5 method calls per minute
+     * for each unique {@code javax.servlet.http.HttpServletRequest#getRemoteAddr()}
+     */
+    @Throttling(limit = 5, timeUnit = TimeUnit.MINUTES)
+    Model computeWithHttpRemoteAddrThrottling(Model model) {
+        log.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
+        return model;
+    }
 }
