@@ -31,6 +31,13 @@ public @interface Throttling {
     int limit() default 1;
 
     /**
+     * Returns max number of calls per TimeUnit No default value.
+     *
+     * @return the throttle limit as string
+     */
+    String limitString() default "";
+
+    /**
      * Returns ThrottlingType {@see ThrottlingType}
      * Used to evaluate method execution context.
      * Default value is {@code ThrottlingType.RemoteAddr}

@@ -2,6 +2,7 @@
 spring:
   throttling:
     lru-cache-capacity: 100
+    controller-request-per-minute: 3
 
   application:
     name: example

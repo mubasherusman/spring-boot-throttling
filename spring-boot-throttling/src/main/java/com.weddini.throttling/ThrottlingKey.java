@@ -4,9 +4,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.springframework.util.StringUtils;
+import org.springframework.util.StringValueResolver;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * Class holding method execution context
@@ -18,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 @EqualsAndHashCode
 @RequiredArgsConstructor
 public class ThrottlingKey {
+
+    private final static Map<String, Integer> RESOLVED_STRINGS = new HashMap<>();
 
     @Getter private final Method method;
     @Getter private final int limit;
@@ -42,7 +51,32 @@ public class ThrottlingKey {
         }
 
         public Builder annotation(Throttling throttling) {
-            limit = throttling.limit();
+            limit = ofNullable(RESOLVED_STRINGS.get(throttling.limitString()))
+                .orElse(throttling.limit());
+            type = throttling.type();
+            timeUnit = throttling.timeUnit();
+            return this;
+        }
+
+        public Builder annotation(StringValueResolver embeddedValueResolver, Throttling throttling) {
+            limit = Optional.of(throttling.limitString())
+                .filter(StringUtils::hasText)
+                .map(limitString -> RESOLVED_STRINGS.computeIfAbsent(limitString, s -> {
+
+                    String resolvedLimitString = ofNullable(embeddedValueResolver)
+                        .map(resolver -> resolver.resolveStringValue(limitString))
+                        .filter(StringUtils::hasText)
+                        .orElse(limitString);
+
+                    try {
+                        return Integer.parseInt(resolvedLimitString);
+                    } catch (RuntimeException ex) {
+                        throw new IllegalArgumentException(
+                            "Invalid limitString value \"" + resolvedLimitString
+                                + "\" - cannot parse into long");
+                    }
+                }))
+                .orElse(throttling.limit());
             type = throttling.type();
             timeUnit = throttling.timeUnit();
             return this;

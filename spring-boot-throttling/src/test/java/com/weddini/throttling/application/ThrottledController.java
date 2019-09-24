@@ -26,4 +26,18 @@ public class ThrottledController {
         return ResponseEntity.ok().body("ok");
     }
 
+    /**
+     * Throttling configuration:
+     * <p>
+     * allow 3 HTTP GET requests per minute
+     * for each unique {@code javax.servlet.http.HttpServletRequest#getRemoteAddr()}
+     */
+    @GetMapping("/throttledControllerLimitString")
+    @Throttling(limitString = "${spring.throttling.controller-request-per-minute}",
+        timeUnit = TimeUnit.MINUTES, type = ThrottlingType.RemoteAddr)
+    public ResponseEntity<String> controllerThrottlingLimitString() {
+        log.info("accessing throttled controller");
+        return ResponseEntity.ok().body("ok");
+    }
+
 }

@@ -8,7 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringValueResolver;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -21,13 +23,14 @@ import static org.springframework.core.annotation.AnnotationUtils.findAnnotation
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class ThrottlingAspect {
+public class ThrottlingAspect implements EmbeddedValueResolverAware {
 
     private static final Log LOGGER = LogFactory.getLog(ThrottlingAspect.class);
 
     private final ThrottlingService service;
     private final ThrottlingEvaluator evaluator;
 
+    private StringValueResolver stringValueResolver;
     private Map<String, Optional<Throttling>> jointPointsCache = new HashMap<>();
 
     @Before("@annotation(Throttling)")
@@ -48,7 +51,7 @@ public class ThrottlingAspect {
 
                 ThrottlingKey key = ThrottlingKey.builder()
                     .method(method)
-                    .annotation(annotation)
+                    .annotation(stringValueResolver, annotation)
                     .evaluatedValue(evaluatedValue)
                     .build();
 
@@ -79,4 +82,8 @@ public class ThrottlingAspect {
             .toArray(Class[]::new);
     }
 
+    @Override
+    public void setEmbeddedValueResolver(StringValueResolver stringValueResolver) {
+        this.stringValueResolver = stringValueResolver;
+    }
 }
