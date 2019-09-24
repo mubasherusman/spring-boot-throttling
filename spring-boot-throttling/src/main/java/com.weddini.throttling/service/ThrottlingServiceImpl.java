@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.concurrent.ExecutionException;
 
-
 public class ThrottlingServiceImpl implements ThrottlingService {
 
     private final Log logger = LogFactory.getLog(getClass());
@@ -18,11 +17,10 @@ public class ThrottlingServiceImpl implements ThrottlingService {
     private final Cache<ThrottlingKey, ThrottlingGauge> cache;
     private final CacheLoader<ThrottlingKey, ThrottlingGauge> gaugeLoader = key -> new ThrottlingGauge(key.getTimeUnit(), key.getLimit());
 
-
     public ThrottlingServiceImpl(int cacheSize) {
         this.cache = CacheBuilder.<ThrottlingKey, ThrottlingGauge>builder()
-                .setMaximumWeight(cacheSize)
-                .build();
+            .setMaximumWeight(cacheSize)
+            .build();
     }
 
     @Override

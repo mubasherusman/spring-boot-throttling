@@ -20,9 +20,9 @@ public class DemoServiceImpl implements DemoService {
      */
     @Override
     @Throttling(limit = 3,
-            timeUnit = TimeUnit.MINUTES,
-            type = ThrottlingType.SpEL,
-            expression = "#model.userName")
+        timeUnit = TimeUnit.MINUTES,
+        type = ThrottlingType.SpEL,
+        expression = "#model.userName")
     public Model computeWithSpElThrottling(Model model) {
         log.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
         return model;
@@ -36,9 +36,9 @@ public class DemoServiceImpl implements DemoService {
      */
     @Override
     @Throttling(limit = 10,
-            timeUnit = TimeUnit.MINUTES,
-            type = ThrottlingType.HeaderValue,
-            headerName = "X-Forwarded-For")
+        timeUnit = TimeUnit.MINUTES,
+        type = ThrottlingType.HeaderValue,
+        headerName = "X-Forwarded-For")
     public Model computeWithHttpHeaderThrottling(Model model) {
         log.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
         return model;

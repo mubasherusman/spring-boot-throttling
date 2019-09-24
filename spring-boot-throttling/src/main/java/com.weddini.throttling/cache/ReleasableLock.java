@@ -9,7 +9,6 @@ public class ReleasableLock implements Closeable {
 
     private final ThreadLocal<Integer> holdingThreads = new ThreadLocal<>();
 
-
     public ReleasableLock(Lock lock) {
         this.lock = lock;
     }
@@ -19,7 +18,6 @@ public class ReleasableLock implements Closeable {
         assert addCurrentThread();
         return this;
     }
-
 
     @Override
     public void close() {

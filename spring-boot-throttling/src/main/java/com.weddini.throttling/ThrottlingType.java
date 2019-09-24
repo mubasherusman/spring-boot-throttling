@@ -2,7 +2,7 @@ package com.weddini.throttling;
 
 /**
  * Enumeration of supported throttling types.
-
+ *
  * <p>Used to evaluate method execution context in {@link Throttling} configuration.
  *
  * @author Nikolay Papakha (nikolay.papakha@gmail.com)

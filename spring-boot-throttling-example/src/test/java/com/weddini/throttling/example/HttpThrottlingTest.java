@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -25,15 +25,15 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class HttpThrottlingTest {
 
     private final MediaType jsonContentType = new MediaType(
-            MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(),
-            Charset.forName("utf8")
+        MediaType.APPLICATION_JSON.getType(),
+        MediaType.APPLICATION_JSON.getSubtype(),
+        StandardCharsets.UTF_8
     );
 
     private final MediaType textPlainContentType = new MediaType(
-            MediaType.TEXT_PLAIN.getType(),
-            MediaType.TEXT_PLAIN.getSubtype(),
-            Charset.forName("utf8")
+        MediaType.TEXT_PLAIN.getType(),
+        MediaType.TEXT_PLAIN.getSubtype(),
+        StandardCharsets.UTF_8
     );
 
     private MockMvc mockMvc;
@@ -41,12 +41,10 @@ public class HttpThrottlingTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
     }
-
 
     @Test
     public void testThrottledController() throws Exception {
@@ -63,56 +61,53 @@ public class HttpThrottlingTest {
         // 192.168.0.1
         for (int i = 0; i < 3; i++) {
             mockMvc.perform(get("/throttledController")
-                    .with(postProcessor1))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(textPlainContentType));
+                .with(postProcessor1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(textPlainContentType));
         }
 
         mockMvc.perform(get("/throttledController")
-                .with(postProcessor1))
-                .andExpect(status().is(429));
-
+            .with(postProcessor1))
+            .andExpect(status().is(429));
 
         // 192.168.0.2
         for (int i = 0; i < 3; i++) {
             mockMvc.perform(get("/throttledController")
-                    .with(postProcessor2))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(textPlainContentType));
+                .with(postProcessor2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(textPlainContentType));
         }
 
         mockMvc.perform(get("/throttledController")
-                .with(postProcessor2))
-                .andExpect(status().is(429));
+            .with(postProcessor2))
+            .andExpect(status().is(429));
 
         // sleep 1 minute
         Thread.sleep(60 * 1000 + 100);
 
-
         // 192.168.0.1
         for (int i = 0; i < 3; i++) {
             mockMvc.perform(get("/throttledController")
-                    .with(postProcessor1))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(textPlainContentType));
+                .with(postProcessor1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(textPlainContentType));
         }
 
         mockMvc.perform(get("/throttledController")
-                .with(postProcessor1))
-                .andExpect(status().is(429));
-
+            .with(postProcessor1))
+            .andExpect(status().is(429));
 
         // 192.168.0.2
         for (int i = 0; i < 3; i++) {
             mockMvc.perform(get("/throttledController")
-                    .with(postProcessor2))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(textPlainContentType));
+                .with(postProcessor2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(textPlainContentType));
         }
 
         mockMvc.perform(get("/throttledController")
-                .with(postProcessor2))
-                .andExpect(status().is(429));
+            .with(postProcessor2))
+            .andExpect(status().is(429));
     }
 
     @Test
@@ -130,24 +125,24 @@ public class HttpThrottlingTest {
         // remoteAddr = 192.168.0.1
         for (int i = 0; i < 5; i++) {
             mockMvc.perform(get("/throttling/remoteAddr/Alex")
-                    .with(postProcessor1))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .with(postProcessor1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/remoteAddr/Alex")
-                .with(postProcessor1))
-                .andExpect(status().is(429));
+            .with(postProcessor1))
+            .andExpect(status().is(429));
 
         // remoteAddr = 192.168.0.2
         for (int i = 0; i < 5; i++) {
             mockMvc.perform(get("/throttling/remoteAddr/Vasya")
-                    .with(postProcessor2))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .with(postProcessor2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/remoteAddr/Vasya")
-                .with(postProcessor2))
-                .andExpect(status().is(429));
+            .with(postProcessor2))
+            .andExpect(status().is(429));
 
         // sleep 1 minute
         Thread.sleep(60 * 1000 + 100);
@@ -155,51 +150,50 @@ public class HttpThrottlingTest {
         // remoteAddr = 192.168.0.1
         for (int i = 0; i < 5; i++) {
             mockMvc.perform(get("/throttling/remoteAddr/Alex")
-                    .with(postProcessor1))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .with(postProcessor1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/remoteAddr/Alex")
-                .with(postProcessor1))
-                .andExpect(status().is(429));
+            .with(postProcessor1))
+            .andExpect(status().is(429));
 
         // remoteAddr = 192.168.0.2
         for (int i = 0; i < 5; i++) {
             mockMvc.perform(get("/throttling/remoteAddr/Vasya")
-                    .with(postProcessor2))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .with(postProcessor2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/remoteAddr/Vasya")
-                .with(postProcessor2))
-                .andExpect(status().is(429));
+            .with(postProcessor2))
+            .andExpect(status().is(429));
     }
-
 
     @Test
     public void testHeader() throws Exception {
         // remoteAddr = 10.10.10.10
         for (int i = 0; i < 10; i++) {
             mockMvc.perform(get("/throttling/header/Alex")
-                    .header("X-Forwarded-For", "10.10.10.10"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .header("X-Forwarded-For", "10.10.10.10"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/header/Alex")
-                .header("X-Forwarded-For", "10.10.10.10"))
-                .andExpect(status().is(429));
+            .header("X-Forwarded-For", "10.10.10.10"))
+            .andExpect(status().is(429));
 
         // remoteAddr = 10.10.10.101
         for (int i = 0; i < 10; i++) {
             mockMvc.perform(get("/throttling/header/Vasya")
-                    .header("X-Forwarded-For", "10.10.10.101"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .header("X-Forwarded-For", "10.10.10.101"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
 
         mockMvc.perform(get("/throttling/header/Vasya")
-                .header("X-Forwarded-For", "10.10.10.101"))
-                .andExpect(status().is(429));
+            .header("X-Forwarded-For", "10.10.10.101"))
+            .andExpect(status().is(429));
 
         // sleep 1 minute
         Thread.sleep(60 * 1000 + 100);
@@ -207,24 +201,24 @@ public class HttpThrottlingTest {
         // remoteAddr = 10.10.10.10
         for (int i = 0; i < 10; i++) {
             mockMvc.perform(get("/throttling/header/Alex")
-                    .header("X-Forwarded-For", "10.10.10.10"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .header("X-Forwarded-For", "10.10.10.10"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/header/Alex")
-                .header("X-Forwarded-For", "10.10.10.10"))
-                .andExpect(status().is(429));
+            .header("X-Forwarded-For", "10.10.10.10"))
+            .andExpect(status().is(429));
 
         // remoteAddr = 10.10.10.101
         for (int i = 0; i < 10; i++) {
             mockMvc.perform(get("/throttling/header/Vasya")
-                    .header("X-Forwarded-For", "10.10.10.101"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(jsonContentType));
+                .header("X-Forwarded-For", "10.10.10.101"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(jsonContentType));
         }
         mockMvc.perform(get("/throttling/header/Vasya")
-                .header("X-Forwarded-For", "10.10.10.101"))
-                .andExpect(status().is(429));
+            .header("X-Forwarded-For", "10.10.10.101"))
+            .andExpect(status().is(429));
     }
 
 }

@@ -1,6 +1,5 @@
 package com.weddini.throttling.cache;
 
-
 public class RemovalNotification<K, V> {
     public enum RemovalReason {REPLACED, INVALIDATED, EVICTED}
 

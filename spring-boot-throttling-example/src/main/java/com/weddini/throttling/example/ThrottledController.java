@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 @Controller
 public class ThrottledController {
 
-
     /**
      * Throttling configuration:
      * <p>

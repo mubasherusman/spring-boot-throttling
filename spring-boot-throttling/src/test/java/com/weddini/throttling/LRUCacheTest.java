@@ -10,7 +10,6 @@ public class LRUCacheTest {
     @Test
     public void testLRUCache() {
 
-
         Cache<Integer, Integer> cache = CacheBuilder.<Integer, Integer>builder().setMaximumWeight(3).build();
         cache.put(1, 1);
         cache.put(2, 1);
@@ -41,6 +40,6 @@ public class LRUCacheTest {
         Assert.notNull(cache.get(4), "entry with key = 4 should be in cache");
         Assert.notNull(cache.get(6), "entry with key = 6 should be in cache");
         Assert.notNull(cache.get(7), "entry with key = 7 should be in cache");
-        
+
     }
 }

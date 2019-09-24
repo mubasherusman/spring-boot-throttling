@@ -12,6 +12,7 @@ import org.springframework.expression.Expression;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -92,7 +93,7 @@ public class SpElEvaluator extends CachedExpressionEvaluator {
 
             ExpressionRootObject that = (ExpressionRootObject) o;
 
-            if (object != null ? !object.equals(that.object) : that.object != null) return false;
+            if (!Objects.equals(object, that.object)) return false;
             // Probably incorrect - comparing Object[] arrays with Arrays.equals
             return Arrays.equals(args, that.args);
         }

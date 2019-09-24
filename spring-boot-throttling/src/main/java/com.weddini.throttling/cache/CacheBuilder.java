@@ -26,7 +26,6 @@ public class CacheBuilder<K, V> {
         return this;
     }
 
-
     public CacheBuilder<K, V> setExpireAfterAccess(long expireAfterAccessNanos) {
         if (expireAfterAccessNanos <= 0) {
             throw new IllegalArgumentException("expireAfterAccess <= 0");
@@ -34,7 +33,6 @@ public class CacheBuilder<K, V> {
         this.expireAfterAccessNanos = expireAfterAccessNanos;
         return this;
     }
-
 
     public CacheBuilder<K, V> setExpireAfterWrite(long expireAfterWriteNanos) {
         if (expireAfterWriteNanos <= 0) {

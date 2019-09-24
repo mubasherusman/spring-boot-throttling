@@ -2,12 +2,12 @@ package com.weddini.throttling.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/throttling")
 public class DemoController {
 
@@ -21,21 +21,21 @@ public class DemoController {
     @GetMapping("/SpEl/{userName}")
     public ResponseEntity<Model> spEl(@PathVariable(value = "userName") String userName) {
         return ResponseEntity.ok(demoService.computeWithSpElThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+            .userName(userName)
+            .build()));
     }
 
     @GetMapping("/header/{userName}")
     public ResponseEntity<Model> header(@PathVariable(value = "userName") String userName) {
         return ResponseEntity.ok(demoService.computeWithHttpHeaderThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+            .userName(userName)
+            .build()));
     }
 
     @GetMapping("/remoteAddr/{userName}")
     public ResponseEntity<Model> remoteAddr(@PathVariable(value = "userName") String userName) {
         return ResponseEntity.ok(demoService.computeWithHttpRemoteAddrThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+            .userName(userName)
+            .build()));
     }
 }

@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 import static com.weddini.throttling.ThrottlingType.SpEL;
 
-
 public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
 
     private final Log logger = LogFactory.getLog(getClass());
@@ -36,7 +35,7 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
             } catch (Throwable t) {
                 if (logger.isErrorEnabled()) {
                     logger.error("exception occurred while evaluating SpEl expression = '" +
-                            throttlingConfig.expression() + "', please check @Throttling configuration.", t);
+                        throttlingConfig.expression() + "', please check @Throttling configuration.", t);
                 }
             }
 
@@ -48,14 +47,14 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
             } catch (IllegalStateException e) {
                 if (logger.isErrorEnabled()) {
                     logger.error("no RequestAttributes object is bound to the current thread, " +
-                            "please check @Throttling configuration.", e);
+                        "please check @Throttling configuration.", e);
                 }
             }
 
             if (servletRequest == null) {
                 if (logger.isErrorEnabled()) {
                     logger.error("cannot find HttpServletRequest in RequestContextHolder while processing " +
-                            "@Throttling annotation with type '" + throttlingConfig.type().name() + "'");
+                        "@Throttling annotation with type '" + throttlingConfig.type().name() + "'");
                 }
             } else {
 
@@ -63,14 +62,14 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                     case CookieValue:
                         if (!StringUtils.isEmpty(throttlingConfig.cookieName())) {
                             value = Arrays.stream(servletRequest.getCookies())
-                                    .filter(c -> c.getName().equals(throttlingConfig.cookieName()))
-                                    .findFirst()
-                                    .map(Cookie::getValue)
-                                    .orElse(null);
+                                .filter(c -> c.getName().equals(throttlingConfig.cookieName()))
+                                .findFirst()
+                                .map(Cookie::getValue)
+                                .orElse(null);
                         } else {
                             if (logger.isWarnEnabled()) {
                                 logger.warn("cannot resolve HTTP cookie value for empty cookie name, " +
-                                        "please check @Throttling configuration.");
+                                    "please check @Throttling configuration.");
                             }
                         }
                         break;
@@ -81,7 +80,7 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                         } else {
                             if (logger.isWarnEnabled()) {
                                 logger.warn("cannot resolve HTTP header value for empty header name, " +
-                                        "please check @Throttling configuration.");
+                                    "please check @Throttling configuration.");
                             }
                         }
                         break;
@@ -92,7 +91,7 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                         } else {
                             if (logger.isWarnEnabled()) {
                                 logger.warn("cannot resolve servletRequest.getUserPrincipal().getName() " +
-                                        "since servletRequest.getUserPrincipal() is null.");
+                                    "since servletRequest.getUserPrincipal() is null.");
                             }
                         }
                         break;

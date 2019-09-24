@@ -16,7 +16,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToLongBiFunction;
 
-
 /**
  * A simple concurrent cache.
  *
@@ -195,13 +194,7 @@ public class Cache<K, V> {
                 try {
                     CompletableFuture<Entry<K, V>> future = map.put(key, CompletableFuture.completedFuture(entry));
                     if (future != null) {
-                        existing = future.handle((ok, ex) -> {
-                            if (ok != null) {
-                                return ok;
-                            } else {
-                                return null;
-                            }
-                        }).get();
+                        existing = future.handle((ok, ex) -> ok).get();
                     }
                 } catch (ExecutionException | InterruptedException e) {
                     throw new IllegalStateException(e);
@@ -662,7 +655,7 @@ public class Cache<K, V> {
 
     private boolean isExpired(Entry<K, V> entry, long now) {
         return (entriesExpireAfterAccess && now - entry.accessTime > expireAfterAccessNanos) ||
-                (entriesExpireAfterWrite && now - entry.writeTime > expireAfterWriteNanos);
+            (entriesExpireAfterWrite && now - entry.writeTime > expireAfterWriteNanos);
     }
 
     private boolean unlink(Entry<K, V> entry) {
