@@ -42,9 +42,9 @@ public class ThrottlingKey {
         }
 
         public Builder annotation(Throttling throttling) {
-            this.limit = throttling.limit();
-            this.type = throttling.type();
-            this.timeUnit = throttling.timeUnit();
+            limit = throttling.limit();
+            type = throttling.type();
+            timeUnit = throttling.timeUnit();
             return this;
         }
 

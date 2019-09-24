@@ -1,4 +1,4 @@
-package com.weddini.throttling.example;
+package com.weddini.throttling.application;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,12 +38,12 @@ public class HttpThrottlingTest {
 
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+    @Autowired private WebApplicationContext webApplicationContext;
+    @Autowired private TestDateProvider dateProvider;
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+        mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
@@ -82,8 +82,8 @@ public class HttpThrottlingTest {
             .with(postProcessor2))
             .andExpect(status().is(429));
 
-        // sleep 1 minute
-        Thread.sleep(60 * 1000 + 100);
+        // virtually wait 1 minute
+        dateProvider.addMillis(60 * 1000 + 100);
 
         // 192.168.0.1
         for (int i = 0; i < 3; i++) {
@@ -144,8 +144,8 @@ public class HttpThrottlingTest {
             .with(postProcessor2))
             .andExpect(status().is(429));
 
-        // sleep 1 minute
-        Thread.sleep(60 * 1000 + 100);
+        // virtually wait 1 minute
+        dateProvider.addMillis(60 * 1000 + 100);
 
         // remoteAddr = 192.168.0.1
         for (int i = 0; i < 5; i++) {
@@ -195,8 +195,8 @@ public class HttpThrottlingTest {
             .header("X-Forwarded-For", "10.10.10.101"))
             .andExpect(status().is(429));
 
-        // sleep 1 minute
-        Thread.sleep(60 * 1000 + 100);
+        // virtually wait 1 minute
+        dateProvider.addMillis(60 * 1000 + 100);
 
         // remoteAddr = 10.10.10.10
         for (int i = 0; i < 10; i++) {

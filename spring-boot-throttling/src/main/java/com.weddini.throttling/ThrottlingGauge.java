@@ -1,5 +1,8 @@
 package com.weddini.throttling;
 
+import com.weddini.throttling.service.DateProvider;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -11,19 +14,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author Nikolay Papakha (nikolay.papakha@gmail.com)
  */
+@RequiredArgsConstructor
 public class ThrottlingGauge {
 
+    private final TimeUnit timeUnit;
     private final int throttleLimit;
-    private final long mills;
-    private final ArrayList<Long> callTimestamps;
-    private final ReadWriteLock lock;
-
-    public ThrottlingGauge(TimeUnit timeUnit, int throttleLimit) {
-        this.throttleLimit = throttleLimit;
-        mills = timeUnit.toMillis(1);
-        callTimestamps = new ArrayList<>();
-        lock = new ReentrantReadWriteLock(true);
-    }
+    private final DateProvider dateProvider;
+    private final ArrayList<Long> callTimestamps = new ArrayList<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
     public boolean throttle() {
         lock.readLock().lock();
@@ -38,7 +36,7 @@ public class ThrottlingGauge {
         lock.writeLock().lock();
         try {
             if (callTimestamps.size() < throttleLimit) {
-                callTimestamps.add(System.currentTimeMillis());
+                callTimestamps.add(dateProvider.currentTimeMillis());
                 return true;
             } else {
                 return false;
@@ -49,7 +47,7 @@ public class ThrottlingGauge {
     }
 
     public void removeEldest() {
-        long threshold = System.currentTimeMillis() - this.mills;
+        long threshold = dateProvider.currentTimeMillis() - timeUnit.toMillis(1);
         lock.writeLock().lock();
         try {
             callTimestamps.removeIf(it -> it < threshold);

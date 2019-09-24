@@ -41,12 +41,12 @@ public class SpElEvaluator extends CachedExpressionEvaluator {
     private EvaluationContext createEvaluationContext(Object object, Class<?> targetClass, Method method, Object[] args) {
         Method targetMethod = getTargetMethod(targetClass, method);
         ExpressionRootObject root = new ExpressionRootObject(object, args);
-        return new MethodBasedEvaluationContext(root, targetMethod, args, this.paramNameDiscoverer);
+        return new MethodBasedEvaluationContext(root, targetMethod, args, paramNameDiscoverer);
     }
 
     private String condition(String conditionExpression, AnnotatedElementKey elementKey, EvaluationContext evalContext) {
         String result = null;
-        Expression expression = getExpression(this.conditionCache, elementKey, conditionExpression);
+        Expression expression = getExpression(conditionCache, elementKey, conditionExpression);
         if (expression != null) {
             try {
                 result = expression.getValue(evalContext, String.class);
@@ -58,13 +58,13 @@ public class SpElEvaluator extends CachedExpressionEvaluator {
 
     private Method getTargetMethod(Class<?> targetClass, Method method) {
         AnnotatedElementKey methodKey = new AnnotatedElementKey(method, targetClass);
-        Method targetMethod = this.targetMethodCache.get(methodKey);
+        Method targetMethod = targetMethodCache.get(methodKey);
         if (targetMethod == null) {
             targetMethod = AopUtils.getMostSpecificMethod(method, targetClass);
             if (targetMethod == null) {
                 targetMethod = method;
             }
-            this.targetMethodCache.put(methodKey, targetMethod);
+            targetMethodCache.put(methodKey, targetMethod);
         }
         return targetMethod;
     }

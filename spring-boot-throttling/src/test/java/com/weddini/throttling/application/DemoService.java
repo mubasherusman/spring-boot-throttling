@@ -1,4 +1,4 @@
-package com.weddini.throttling.example;
+package com.weddini.throttling.application;
 
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.ThrottlingType;
@@ -22,9 +22,9 @@ public class DemoService {
         timeUnit = TimeUnit.MINUTES,
         type = ThrottlingType.SpEL,
         expression = "#model.userName")
-    public Model computeWithSpElThrottling(Model model) {
+    public String computeWithSpElThrottling(Model model) {
         log.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
-        return model;
+        return model.getUserName();
     }
 
     /**
@@ -37,9 +37,9 @@ public class DemoService {
         timeUnit = TimeUnit.MINUTES,
         type = ThrottlingType.HeaderValue,
         headerName = "X-Forwarded-For")
-    public Model computeWithHttpHeaderThrottling(Model model) {
+    public String computeWithHttpHeaderThrottling(Model model) {
         log.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
-        return model;
+        return model.getUserName();
     }
 
     /**
@@ -49,8 +49,8 @@ public class DemoService {
      * for each unique {@code javax.servlet.http.HttpServletRequest#getRemoteAddr()}
      */
     @Throttling(limit = 5, timeUnit = TimeUnit.MINUTES)
-    public Model computeWithHttpRemoteAddrThrottling(Model model) {
+    public String computeWithHttpRemoteAddrThrottling(Model model) {
         log.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
-        return model;
+        return model.getUserName();
     }
 }

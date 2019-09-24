@@ -1,6 +1,8 @@
 package com.weddini.throttling.autoconfigure;
 
 import com.weddini.throttling.ThrottlingAspect;
+import com.weddini.throttling.service.DateProvider;
+import com.weddini.throttling.service.DateProviderImpl;
 import com.weddini.throttling.service.ThrottlingEvaluator;
 import com.weddini.throttling.service.ThrottlingEvaluatorImpl;
 import com.weddini.throttling.service.ThrottlingService;
@@ -26,8 +28,14 @@ public class ThrottlingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    public DateProvider dateProvider() {
+        return new DateProviderImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public ThrottlingService throttlingService() {
-        return new ThrottlingServiceImpl(throttlingProperties.getLruCacheCapacity());
+        return new ThrottlingServiceImpl(throttlingProperties.getLruCacheCapacity(), dateProvider());
     }
 
     @Bean

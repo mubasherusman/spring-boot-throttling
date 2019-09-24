@@ -15,12 +15,13 @@ public class ThrottlingServiceImpl implements ThrottlingService {
     private final Log logger = LogFactory.getLog(getClass());
 
     private final Cache<ThrottlingKey, ThrottlingGauge> cache;
-    private final CacheLoader<ThrottlingKey, ThrottlingGauge> gaugeLoader = key -> new ThrottlingGauge(key.getTimeUnit(), key.getLimit());
+    private final CacheLoader<ThrottlingKey, ThrottlingGauge> gaugeLoader;
 
-    public ThrottlingServiceImpl(int cacheSize) {
-        this.cache = CacheBuilder.<ThrottlingKey, ThrottlingGauge>builder()
+    public ThrottlingServiceImpl(int cacheSize, DateProvider dateProvider) {
+        cache = CacheBuilder.<ThrottlingKey, ThrottlingGauge>builder()
             .setMaximumWeight(cacheSize)
             .build();
+        gaugeLoader = key -> new ThrottlingGauge(key.getTimeUnit(), key.getLimit(), dateProvider);
     }
 
     @Override

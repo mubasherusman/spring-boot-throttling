@@ -61,6 +61,8 @@ Add the following code to dependencies section of your pom.xml:
 The following throttling configuration allows 1 method calls per SECOND for each unique `HttpServletRequest#getRemoteAddr()`.
 This is 'defaults' for `@Throttling` annotation.
 
+**IMPORTANT** : Annotated method with `@Throttling` must be public.
+
 ```java
 @Throttling
 public void serviceMethod() {

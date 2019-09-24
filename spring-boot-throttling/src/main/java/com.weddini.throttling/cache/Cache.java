@@ -61,7 +61,7 @@ public class Cache<K, V> {
             throw new IllegalArgumentException("expireAfterAccessNanos <= 0");
         }
         this.expireAfterAccessNanos = expireAfterAccessNanos;
-        this.entriesExpireAfterAccess = true;
+        entriesExpireAfterAccess = true;
     }
 
     void setExpireAfterWriteNanos(long expireAfterWriteNanos) {
@@ -69,7 +69,7 @@ public class Cache<K, V> {
             throw new IllegalArgumentException("expireAfterWriteNanos <= 0");
         }
         this.expireAfterWriteNanos = expireAfterWriteNanos;
-        this.entriesExpireAfterWrite = true;
+        entriesExpireAfterWrite = true;
     }
 
     void setMaximumWeight(long maximumWeight) {
@@ -115,7 +115,7 @@ public class Cache<K, V> {
         Entry(K key, V value, long writeTime) {
             this.key = key;
             this.value = value;
-            this.writeTime = this.accessTime = writeTime;
+            this.writeTime = accessTime = writeTime;
         }
     }
 
@@ -662,8 +662,8 @@ public class Cache<K, V> {
         assert lruLock.isHeldByCurrentThread();
 
         if (entry.state == State.EXISTING) {
-            final Entry<K, V> before = entry.before;
-            final Entry<K, V> after = entry.after;
+            Entry<K, V> before = entry.before;
+            Entry<K, V> after = entry.after;
 
             if (before == null) {
                 // removing the head

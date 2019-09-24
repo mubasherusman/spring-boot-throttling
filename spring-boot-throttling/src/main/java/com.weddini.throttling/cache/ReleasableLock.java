@@ -26,13 +26,13 @@ public class ReleasableLock implements Closeable {
     }
 
     private boolean addCurrentThread() {
-        final Integer current = holdingThreads.get();
+        Integer current = holdingThreads.get();
         holdingThreads.set(current == null ? 1 : current + 1);
         return true;
     }
 
     private boolean removeCurrentThread() {
-        final Integer count = holdingThreads.get();
+        Integer count = holdingThreads.get();
         assert count != null && count > 0;
         if (count == 1) {
             holdingThreads.remove();
@@ -43,7 +43,7 @@ public class ReleasableLock implements Closeable {
     }
 
     public boolean isHeldByCurrentThread() {
-        final Integer count = holdingThreads.get();
+        Integer count = holdingThreads.get();
         return count != null && count > 0;
     }
 }

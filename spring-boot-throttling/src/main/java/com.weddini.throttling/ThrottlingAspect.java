@@ -33,6 +33,10 @@ public class ThrottlingAspect {
     @Before("@annotation(Throttling)")
     public void throttle(JoinPoint joinPoint) throws NoSuchMethodException {
 
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.info("Evaluating method with Throttling annotation : " + joinPoint.getSignature().toShortString());
+        }
+
         String signature = joinPoint.getSignature().toString();
         Method method = getMethod(joinPoint);
 
@@ -40,7 +44,7 @@ public class ThrottlingAspect {
 
         jointPointsCache.get(signature)
             .ifPresent(annotation -> {
-                final String evaluatedValue = evaluator.evaluate(annotation, joinPoint.getThis(), joinPoint.getSignature().getDeclaringType(), method, joinPoint.getArgs());
+                String evaluatedValue = evaluator.evaluate(annotation, joinPoint.getThis(), joinPoint.getSignature().getDeclaringType(), method, joinPoint.getArgs());
 
                 ThrottlingKey key = ThrottlingKey.builder()
                     .method(method)

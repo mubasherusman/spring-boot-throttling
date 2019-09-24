@@ -1,5 +1,6 @@
 package com.weddini.throttling;
 
+import com.weddini.throttling.service.DateProviderImpl;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
@@ -9,7 +10,7 @@ public class ThrottlingGaugeTest {
 
     @Test
     public void testThrottlingGauge() throws InterruptedException {
-        ThrottlingGauge gauge = new ThrottlingGauge(TimeUnit.SECONDS, 1);
+        ThrottlingGauge gauge = new ThrottlingGauge(TimeUnit.SECONDS, 1, new DateProviderImpl());
 
         gauge.removeEldest();
         Assert.isTrue(gauge.throttle(), "Should be ok with the first call");

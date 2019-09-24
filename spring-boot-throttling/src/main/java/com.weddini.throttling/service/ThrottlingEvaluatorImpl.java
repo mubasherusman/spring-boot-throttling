@@ -22,7 +22,7 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
     private final SpElEvaluator spElEvaluator;
 
     public ThrottlingEvaluatorImpl() {
-        this.spElEvaluator = new SpElEvaluator();
+        spElEvaluator = new SpElEvaluator();
     }
 
     @Override
