@@ -8,12 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringValueResolver;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class ThrottlingAspect implements EmbeddedValueResolverAware {
     private Map<String, Optional<Throttling>> jointPointsCache = new HashMap<>();
 
     @Before("@annotation(Throttling)")
-    public void throttle(JoinPoint joinPoint) throws NoSuchMethodException {
+    public void throttle(JoinPoint joinPoint) {
 
         if (LOGGER.isTraceEnabled()) {
             LOGGER.info("Evaluating method with Throttling annotation : " + joinPoint.getSignature().toShortString());
@@ -71,15 +71,8 @@ public class ThrottlingAspect implements EmbeddedValueResolverAware {
         return Optional.ofNullable(findAnnotation(method, Throttling.class));
     }
 
-    @SuppressWarnings("unchecked")
-    private static Method getMethod(JoinPoint joinPoint) throws NoSuchMethodException {
-        return joinPoint.getSignature().getDeclaringType().getMethod(joinPoint.getSignature().getName(), argClasses(joinPoint));
-    }
-
-    private static Class[] argClasses(JoinPoint joinPoint) {
-        return Arrays.stream(joinPoint.getArgs())
-            .map(Object::getClass)
-            .toArray(Class[]::new);
+    private static Method getMethod(JoinPoint joinPoint) {
+        return ((MethodSignature) joinPoint.getSignature()).getMethod();
     }
 
     @Override
