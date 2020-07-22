@@ -1,3 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2017-2020
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -138,55 +154,55 @@
                 </executions>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.rat</groupId>-->
-<!--                <artifactId>apache-rat-plugin</artifactId>-->
-<!--                <inherited>false</inherited>-->
-<!--                &lt;!&ndash; https://issues.apache.org/jira/browse/RAT-158 &ndash;&gt;-->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>org.apache.maven.doxia</groupId>-->
-<!--                        <artifactId>doxia-core</artifactId>-->
-<!--                        <version>1.9.1</version>-->
-<!--                        <exclusions>-->
-<!--                            <exclusion>-->
-<!--                                <groupId>xerces</groupId>-->
-<!--                                <artifactId>xercesImpl</artifactId>-->
-<!--                            </exclusion>-->
-<!--                        </exclusions>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>validate</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>check</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <consoleOutput>true</consoleOutput>-->
-<!--                    <excludeSubProjects>false</excludeSubProjects>-->
-<!--                    <excludes>-->
-<!--                        &lt;!&ndash; Version control files &ndash;&gt;-->
-<!--                        <exclude>**/.git/**</exclude>-->
-<!--                        <exclude>**/.gitignore</exclude>-->
-<!--                        &lt;!&ndash; IDE settings and files &ndash;&gt;-->
-<!--                        <exclude>**/.classpath</exclude>-->
-<!--                        <exclude>**/.project</exclude>-->
-<!--                        <exclude>**/.settings/**</exclude>-->
-<!--                        <exclude>**/.idea/**</exclude>-->
-<!--                        <exclude>**/*.iml</exclude>-->
-<!--                        <exclude>*.patch</exclude>-->
-<!--                        <exclude>*.diff</exclude>-->
-<!--                        &lt;!&ndash; Files that cannot be 'polluted' &ndash;&gt;-->
-<!--                        <exclude>.github/**</exclude>-->
-<!--                        &lt;!&ndash; File generated during build &ndash;&gt;-->
-<!--                        <exclude>**/target/**</exclude>-->
-<!--                        <exclude>**/dependency-reduced-pom.xml</exclude>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <inherited>false</inherited>
+                <!-- https://issues.apache.org/jira/browse/RAT-158 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-core</artifactId>
+                        <version>1.9.1</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>xerces</groupId>
+                                <artifactId>xercesImpl</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <consoleOutput>true</consoleOutput>
+                    <excludeSubProjects>false</excludeSubProjects>
+                    <excludes>
+                        <!-- Version control files -->
+                        <exclude>**/.git/**</exclude>
+                        <exclude>**/.gitignore</exclude>
+                        <!-- IDE settings and files -->
+                        <exclude>**/.classpath</exclude>
+                        <exclude>**/.project</exclude>
+                        <exclude>**/.settings/**</exclude>
+                        <exclude>**/.idea/**</exclude>
+                        <exclude>**/*.iml</exclude>
+                        <exclude>*.patch</exclude>
+                        <exclude>*.diff</exclude>
+                        <!-- Files that cannot be 'polluted' -->
+                        <exclude>.github/**</exclude>
+                        <!-- File generated during build -->
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/dependency-reduced-pom.xml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
         </plugins>
 
