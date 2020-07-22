@@ -36,7 +36,7 @@
             <dependency>
                 <groupId>com.weddini.throttling</groupId>
                 <artifactId>spring-boot-throttling-starter</artifactId>
-                <version>0.0.10-SNAPSHOT</version>
+                <version>${spring-boot-throttling.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

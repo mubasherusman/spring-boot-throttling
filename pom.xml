@@ -211,18 +211,15 @@
                 <plugin><artifactId>maven-failsafe-plugin</artifactId><version>3.0.0-M4</version></plugin>
                 <plugin><artifactId>maven-war-plugin</artifactId><version>3.3.0</version></plugin>
 
-
-
-
             </plugins>
         </pluginManagement>
     </build>
 
     <modules>
-        <module>spring-boot-throttling</module>
-        <module>spring-boot-throttling-autoconfigure</module>
-        <module>spring-boot-throttling-starter</module>
-        <module>spring-boot-throttling-example</module>
+        <module>core</module>
+        <module>autoconfigure</module>
+        <module>starter</module>
+        <module>example</module>
     </modules>
 
     <licenses>
