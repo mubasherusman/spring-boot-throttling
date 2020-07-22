@@ -10,35 +10,219 @@
     <name>Spring boot Throttling : </name>
 
     <properties>
+        <target.java.version>1.8</target.java.version>
+        <target.java.release>8</target.java.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <maven.compiler.source>${target.java.version}</maven.compiler.source>
+        <maven.compiler.target>${target.java.version}</maven.compiler.target>
+
+        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
+
+        <!-- In order for everything to work correctly we need at least this version of maven. -->
+        <maven.minimal.version>3.5.2</maven.minimal.version>
+
+        <depencency-convergence.phase>validate</depencency-convergence.phase>
+
     </properties>
+
+    <profiles>
+        <profile>
+            <id>Build with JDK 8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <compilerVersion>${target.java.version}</compilerVersion>
+                            <source>${target.java.version}</source>
+                            <target>${target.java.version}</target>
+                            <compilerArgs>
+                                <!-- Enable almost all warnings.-->
+                                <!-- Ignore the 'serial' warnings about not having a serialVersionUID -->
+                                <arg>-Xlint:all,-serial</arg>
+<!--                                <arg>-Werror</arg>-->
+                                <arg>-implicit:class</arg>
+                            </compilerArgs>
+                            <showWarnings>true</showWarnings>
+                            <showDeprecation>true</showDeprecation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>Build with JDK 11+</id>
+            <activation>
+                <jdk>[1.11,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <release>${target.java.release}</release>
+                            <compilerArgs>
+                                <!-- Enable almost all warnings.-->
+                                <!-- Ignore the 'serial' warnings about not having a serialVersionUID -->
+                                <arg>-Xlint:all,-serial</arg>
+<!--                                <arg>-Werror</arg>-->
+                                <arg>-implicit:class</arg>
+                            </compilerArgs>
+                            <showWarnings>true</showWarnings>
+                            <showDeprecation>true</showDeprecation>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>2.1.8.RELEASE</version>
-                <scope>import</scope>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>spring-boot-throttling</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>spring-boot-throttling-autoconfigure</artifactId>
-                <version>${project.version}</version>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[${maven.minimal.version},)</version>
+                                    <message>You must use Maven version ${maven.minimal.version} or newer to build this project.</message>
+                                    <!-- Reasons for this need:                            -->
+                                    <!-- https://issues.apache.org/jira/browse/MDEPLOY-221 -->
+                                    <!-- https://issues.apache.org/jira/browse/MNG-6581    -->
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>dependency-convergence</id>
+                        <phase>${depencency-convergence.phase}</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <dependencyConvergence/>
+                            </rules>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.rat</groupId>-->
+<!--                <artifactId>apache-rat-plugin</artifactId>-->
+<!--                <inherited>false</inherited>-->
+<!--                &lt;!&ndash; https://issues.apache.org/jira/browse/RAT-158 &ndash;&gt;-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.apache.maven.doxia</groupId>-->
+<!--                        <artifactId>doxia-core</artifactId>-->
+<!--                        <version>1.9.1</version>-->
+<!--                        <exclusions>-->
+<!--                            <exclusion>-->
+<!--                                <groupId>xerces</groupId>-->
+<!--                                <artifactId>xercesImpl</artifactId>-->
+<!--                            </exclusion>-->
+<!--                        </exclusions>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <consoleOutput>true</consoleOutput>-->
+<!--                    <excludeSubProjects>false</excludeSubProjects>-->
+<!--                    <excludes>-->
+<!--                        &lt;!&ndash; Version control files &ndash;&gt;-->
+<!--                        <exclude>**/.git/**</exclude>-->
+<!--                        <exclude>**/.gitignore</exclude>-->
+<!--                        &lt;!&ndash; IDE settings and files &ndash;&gt;-->
+<!--                        <exclude>**/.classpath</exclude>-->
+<!--                        <exclude>**/.project</exclude>-->
+<!--                        <exclude>**/.settings/**</exclude>-->
+<!--                        <exclude>**/.idea/**</exclude>-->
+<!--                        <exclude>**/*.iml</exclude>-->
+<!--                        <exclude>*.patch</exclude>-->
+<!--                        <exclude>*.diff</exclude>-->
+<!--                        &lt;!&ndash; Files that cannot be 'polluted' &ndash;&gt;-->
+<!--                        <exclude>.github/**</exclude>-->
+<!--                        &lt;!&ndash; File generated during build &ndash;&gt;-->
+<!--                        <exclude>**/target/**</exclude>-->
+<!--                        <exclude>**/dependency-reduced-pom.xml</exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin><groupId>org.apache.rat</groupId><artifactId>apache-rat-plugin</artifactId><version>0.13</version></plugin>
+
+                <plugin><artifactId>maven-antrun-plugin</artifactId><version>3.0.0</version></plugin>
+                <plugin><artifactId>maven-assembly-plugin</artifactId><version>3.3.0</version></plugin>
+                <plugin><artifactId>maven-clean-plugin</artifactId><version>3.1.0</version></plugin>
+                <plugin><artifactId>maven-compiler-plugin</artifactId><version>3.8.1</version></plugin>
+                <plugin><artifactId>maven-deploy-plugin</artifactId><version>3.0.0-M1</version></plugin>
+                <plugin><artifactId>maven-enforcer-plugin</artifactId><version>3.0.0-M3</version></plugin>
+                <plugin><artifactId>maven-install-plugin</artifactId><version>3.0.0-M1</version></plugin>
+                <plugin><artifactId>maven-jar-plugin</artifactId><version>3.2.0</version></plugin>
+                <plugin><artifactId>maven-javadoc-plugin</artifactId><version>3.2.0</version></plugin>
+                <plugin><artifactId>maven-resources-plugin</artifactId><version>3.1.0</version></plugin>
+                <plugin><artifactId>maven-shade-plugin</artifactId><version>3.2.4</version></plugin>
+                <plugin><artifactId>maven-site-plugin</artifactId><version>3.9.0</version></plugin>
+                <plugin><artifactId>maven-source-plugin</artifactId><version>3.2.1</version></plugin>
+                <plugin><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M4</version></plugin>
+                <plugin><artifactId>maven-failsafe-plugin</artifactId><version>3.0.0-M4</version></plugin>
+                <plugin><artifactId>maven-war-plugin</artifactId><version>3.3.0</version></plugin>
+
+
+
+
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <modules>
         <module>spring-boot-throttling</module>
         <module>spring-boot-throttling-autoconfigure</module>
         <module>spring-boot-throttling-starter</module>
+        <module>spring-boot-throttling-example</module>
     </modules>
 
     <licenses>

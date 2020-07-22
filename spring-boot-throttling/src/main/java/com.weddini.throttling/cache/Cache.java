@@ -1,5 +1,6 @@
 package com.weddini.throttling.cache;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -253,7 +254,7 @@ public class Cache<K, V> {
 
     private static final int NUMBER_OF_SEGMENTS = 256;
     @SuppressWarnings("unchecked")
-    private final CacheSegment<K, V>[] segments = new CacheSegment[NUMBER_OF_SEGMENTS];
+    private final CacheSegment<K, V>[] segments = (CacheSegment<K, V>[]) Array.newInstance(CacheSegment.class, NUMBER_OF_SEGMENTS);
 
     {
         for (int i = 0; i < segments.length; i++) {

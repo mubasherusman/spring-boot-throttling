@@ -29,7 +29,7 @@ public class SpElEvaluator extends CachedExpressionEvaluator {
 
     private final Map<AnnotatedElementKey, Method> targetMethodCache = new ConcurrentHashMap<>(64);
 
-    public String evaluate(String expression, Object object, Object[] args, Class clazz, Method method) {
+    public String evaluate(String expression, Object object, Object[] args, Class<?> clazz, Method method) {
         if (args == null) {
             return null;
         }

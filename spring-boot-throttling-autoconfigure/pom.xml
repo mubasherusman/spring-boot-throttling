@@ -19,6 +19,7 @@
         <dependency>
             <groupId>com.weddini.throttling</groupId>
             <artifactId>spring-boot-throttling</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>

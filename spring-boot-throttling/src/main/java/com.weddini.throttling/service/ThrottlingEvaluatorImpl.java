@@ -26,7 +26,7 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
     }
 
     @Override
-    public String evaluate(Throttling throttlingConfig, Object bean, Class clazz, Method method, Object[] args) {
+    public String evaluate(Throttling throttlingConfig, Object bean, Class<?> clazz, Method method, Object[] args) {
         String value = null;
 
         if (throttlingConfig.type().equals(SpEL) && !StringUtils.isEmpty(throttlingConfig.expression())) {

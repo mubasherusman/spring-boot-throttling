@@ -12,18 +12,33 @@
     <description>Sample application for spring-boot-throttling</description>
 
     <properties>
+        <target.java.version>1.8</target.java.version>
+        <target.java.release>8</target.java.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <maven.compiler.source>${target.java.version}</maven.compiler.source>
+        <maven.compiler.target>${target.java.version}</maven.compiler.target>
+
         <spring-boot-throttling.version>0.0.10-SNAPSHOT</spring-boot-throttling.version>
+        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>com.weddini.throttling</groupId>
-                <artifactId>spring-boot-throttling-parent</artifactId>
+                <artifactId>spring-boot-throttling-starter</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
-                <systemPath>..</systemPath>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -33,6 +48,7 @@
             <groupId>com.weddini.throttling</groupId>
             <artifactId>spring-boot-throttling-starter</artifactId>
             <version>${spring-boot-throttling.version}</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>
@@ -64,6 +80,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>
