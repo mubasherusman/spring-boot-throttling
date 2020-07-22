@@ -18,8 +18,8 @@ For unknown reasons the entire original repo is now gone and only forks remain a
 
 Mid 2019 [Michaël COLL](https://github.com/michaelcoll/spring-boot-throttling) made a lot of improvements but this was never been released.
 
-Mid 2020 [Niels Basjes]https://github.com/nielsbasjes/spring-boot-throttling) picked up what Michaël COLL had created and made steps towards maturing the project and actually releasing it on maven central.
-In order to do that correctly all packages were moved from `nl.basjes.weddini` to `nl.basjes.weddini`
+Mid 2020 [Niels Basjes](https://github.com/nielsbasjes/spring-boot-throttling) picked up what Michaël COLL had created and made steps towards maturing the project and actually releasing it on maven central.
+In order to do that correctly all packages were moved from `com.weddini` to `nl.basjes.weddini`
 
 ### Getting Started
 
