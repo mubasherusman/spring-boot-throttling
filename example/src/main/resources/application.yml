@@ -25,4 +25,4 @@ spring:
 
 logging:
   level:
-    com.weddini.throttling: DEBUG
+    nl.basjes.weddini.throttling: DEBUG

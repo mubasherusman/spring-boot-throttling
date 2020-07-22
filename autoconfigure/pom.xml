@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.weddini.throttling</groupId>
+        <groupId>nl.basjes.weddini.throttling</groupId>
         <artifactId>spring-boot-throttling-parent</artifactId>
         <version>0.0.10-SNAPSHOT</version>
     </parent>
@@ -32,7 +32,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.weddini.throttling</groupId>
+            <groupId>nl.basjes.weddini.throttling</groupId>
             <artifactId>spring-boot-throttling</artifactId>
             <version>${project.version}</version>
         </dependency>

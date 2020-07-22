@@ -1,5 +1,5 @@
 # Spring Boot Throttling
-[![travis-ci](https://travis-ci.org/weddini/spring-boot-throttling.svg?branch=master)](https://travis-ci.org/weddini/spring-boot-throttling)
+[![travis-ci](https://travis-ci.org/nielsbasjes/spring-boot-throttling.svg?branch=master)](https://travis-ci.org/nielsbasjes/spring-boot-throttling)
 
 ### Overview
 
@@ -7,40 +7,35 @@ Declarative approach of throttling control over the Spring services.
 `@Throttling` annotation helps you to limit the number of service method calls per `java.util.concurrent.TimeUnit`
 for a particular user, IP address, HTTP header/cookie value, or using [Spring Expression Language (SpEL)](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html).
 
-Please see [example project](https://github.com/weddini/spring-boot-throttling/tree/master/spring-boot-throttling-example). Pull requests are welcome.
+Please see [example project](https://github.com/nielsbasjes/spring-boot-throttling/tree/master/example). Pull requests are welcome.
 
+
+### Project history
+Initially this was created in 2017 by Nikolay Papakha and was made available via https://github.com/weddini/spring-boot-throttling .
+At that time releases were made available by means of committing them to a 'mvn-repo' branch in github which should then be included as a mvn repo in downstream projects.
+
+For unknown reasons the entire original repo is now gone and only forks remain as a consequence any project that followed the original instructions can no longer be built.
+
+Mid 2019 [Michaël COLL](https://github.com/michaelcoll/spring-boot-throttling) made a lot of improvements but this was never been released.
+
+Mid 2020 [Niels Basjes]https://github.com/nielsbasjes/spring-boot-throttling) picked up what Michaël COLL had created and made steps towards maturing the project and actually releasing it on maven central.
+In order to do that correctly all packages were moved from `nl.basjes.weddini` to `nl.basjes.weddini`
 
 ### Getting Started
 
 #### Gradle setup
-
-
 Add the following code to dependencies section of your build.gradle:
 
 ```groovy
-compile('com.weddini.throttling:spring-boot-throttling-starter:0.0.9')
+compile('nl.basjes.weddini.throttling:spring-boot-throttling-starter:0.0.9')
 ```
 
 #### Maven setup
-Add this GitHub repository to you project
-
-```xml
-<repositories>
-    <repository>
-        <id>spring-boot-throttling-repo</id>
-        <url>https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-    </repository>
-</repositories>
-```
 Add the following code to dependencies section of your pom.xml:
 
 ```xml
 <dependency>
-    <groupId>com.weddini.throttling</groupId>
+    <groupId>nl.basjes.weddini.throttling</groupId>
     <artifactId>spring-boot-throttling-starter</artifactId>
     <version>0.0.9</version>
 </dependency>
