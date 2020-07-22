@@ -3,25 +3,17 @@
 
 ### Overview
 
-Declarative approach of throttling control over the Spring services. 
+Declarative approach of throttling control over the Spring services.
 `@Throttling` annotation helps you to limit the number of service method calls per `java.util.concurrent.TimeUnit`
 for a particular user, IP address, HTTP header/cookie value, or using [Spring Expression Language (SpEL)](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html).
 
-Please see [example project](https://github.com/weddini/spring-boot-throttling/tree/master/spring-boot-throttling-example). Pull requests are welcome. 
+Please see [example project](https://github.com/weddini/spring-boot-throttling/tree/master/spring-boot-throttling-example). Pull requests are welcome.
 
 
 ### Getting Started
 
 #### Gradle setup
 
-Add maven repo to you project
-
-```groovy
-repositories {
- maven { url "https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/" }
-}
-
-```
 
 Add the following code to dependencies section of your build.gradle:
 
@@ -80,7 +72,7 @@ public void serviceMethod() {
 The following throttling configuration allows 3 method calls per MINUTE for each unique userName in model object passed as parameter, i.e. `model.getUserName()`.
 
 Please refer to official [docs on SpEL](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html).
- 
+
 ```java
 @Throttling(type = ThrottlingType.SpEL, expression = "#model.userName", limit = 3, timeUnit = TimeUnit.MINUTES)
 public void serviceMethod(Model model) {
@@ -118,7 +110,7 @@ public void serviceMethod() {
 
 ### Error handling
 
-`ThrottlingException` is thrown when method reaches `@Throttling` configuration limit. Service method won't be executed. 
+`ThrottlingException` is thrown when method reaches `@Throttling` configuration limit. Service method won't be executed.
 
 ```java
 @ResponseStatus(code = HttpStatus.TOO_MANY_REQUESTS, reason = "Too many requests")
