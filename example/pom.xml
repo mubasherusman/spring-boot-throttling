@@ -34,7 +34,7 @@
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
 
-        <spring-boot-throttling.version>0.0.10-SNAPSHOT</spring-boot-throttling.version>
+        <spring-boot-throttling.version>0.0.10</spring-boot-throttling.version>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
     </properties>
 

@@ -21,7 +21,7 @@
     <parent>
         <groupId>nl.basjes.weddini.throttling</groupId>
         <artifactId>spring-boot-throttling-parent</artifactId>
-        <version>0.0.10-SNAPSHOT</version>
+        <version>0.0.10</version>
     </parent>
 
     <artifactId>spring-boot-throttling-autoconfigure</artifactId>

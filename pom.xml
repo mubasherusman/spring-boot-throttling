@@ -20,7 +20,7 @@
 
     <groupId>nl.basjes.weddini.throttling</groupId>
     <artifactId>spring-boot-throttling-parent</artifactId>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.10</version>
     <packaging>pom</packaging>
 
     <name>Spring boot Throttling : </name>
