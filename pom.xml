@@ -33,7 +33,7 @@
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
 
-        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
 
         <!-- In order for everything to work correctly we need at least this version of maven. -->
         <maven.minimal.version>3.5.2</maven.minimal.version>
