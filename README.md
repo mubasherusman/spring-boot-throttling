@@ -1,5 +1,5 @@
 # Spring Boot Throttling
-[![travis-ci](https://travis-ci.org/nielsbasjes/spring-boot-throttling.svg?branch=master)](https://travis-ci.org/nielsbasjes/spring-boot-throttling)
+![Java CI with Maven](https://github.com/vicebac/spring-boot-throttling/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 
 ### Overview
 
