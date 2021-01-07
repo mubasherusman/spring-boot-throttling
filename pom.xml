@@ -25,6 +25,14 @@
 
     <name>Spring boot Throttling : </name>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/vicebac/spring-boot-throttling</url>
+		</repository>
+	</distributionManagement>
+  
     <properties>
         <target.java.version>1.8</target.java.version>
         <target.java.release>8</target.java.release>
