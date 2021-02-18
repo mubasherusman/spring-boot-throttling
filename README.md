@@ -5,7 +5,7 @@
 
 Declarative approach of throttling control over the Spring services.
 `@Throttling` annotation helps you to limit the number of service method calls per `java.util.concurrent.TimeUnit`
-for a particular user, IP address, HTTP header/cookie value, or using [Spring Expression Language (SpEL)](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html).
+for a particular user, IP address, HTTP header/cookie value, or using [Spring Expression Language (SpEL)](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions).
 
 Please see [example project](https://github.com/nielsbasjes/spring-boot-throttling/tree/master/example). Pull requests are welcome.
 
@@ -27,7 +27,7 @@ In order to do that correctly all packages were moved from `com.weddini` to `nl.
 Add the following code to dependencies section of your build.gradle:
 
 ```groovy
-compile('nl.basjes.weddini.throttling:spring-boot-throttling-starter:0.0.9')
+compile('nl.basjes.weddini.throttling:spring-boot-throttling-starter:0.0.11')
 ```
 
 #### Maven setup
@@ -37,7 +37,7 @@ Add the following code to dependencies section of your pom.xml:
 <dependency>
     <groupId>nl.basjes.weddini.throttling</groupId>
     <artifactId>spring-boot-throttling-starter</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.11</version>
 </dependency>
 ```
 

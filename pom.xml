@@ -20,7 +20,7 @@
 
     <groupId>nl.basjes.weddini.throttling</groupId>
     <artifactId>spring-boot-throttling-parent</artifactId>
-    <version>0.0.10</version>
+    <version>0.0.11</version>
     <packaging>pom</packaging>
 
     <name>Spring boot Throttling : </name>
@@ -41,7 +41,7 @@
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
 
-        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <spring-boot.version>2.4.2</spring-boot.version>
 
         <!-- In order for everything to work correctly we need at least this version of maven. -->
         <maven.minimal.version>3.5.2</maven.minimal.version>
