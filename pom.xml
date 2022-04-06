@@ -34,8 +34,8 @@
 	</distributionManagement>
   
     <properties>
-        <target.java.version>1.8</target.java.version>
-        <target.java.release>8</target.java.release>
+        <target.java.version>11</target.java.version>
+        <target.java.release>11</target.java.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
@@ -52,38 +52,9 @@
 
     <profiles>
         <profile>
-            <id>Build with JDK 8</id>
-            <activation>
-                <jdk>1.8</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <compilerVersion>${target.java.version}</compilerVersion>
-                            <source>${target.java.version}</source>
-                            <target>${target.java.version}</target>
-                            <compilerArgs>
-                                <!-- Enable almost all warnings.-->
-                                <!-- Ignore the 'serial' warnings about not having a serialVersionUID -->
-                                <arg>-Xlint:all,-serial</arg>
-<!--                                <arg>-Werror</arg>-->
-                                <arg>-implicit:class</arg>
-                            </compilerArgs>
-                            <showWarnings>true</showWarnings>
-                            <showDeprecation>true</showDeprecation>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
             <id>Build with JDK 11+</id>
             <activation>
-                <jdk>[1.11,)</jdk>
+                <jdk>[11,)</jdk>
             </activation>
             <build>
                 <plugins>
