@@ -27,7 +27,7 @@ In order to do that correctly all packages were moved from `com.weddini` to `nl.
 Add the following code to dependencies section of your build.gradle:
 
 ```groovy
-compile('nl.basjes.weddini.throttling:spring-boot-throttling-starter:0.0.11')
+compile('nl.basjes.weddini.throttling:spring-boot-throttling-starter:0.0.12')
 ```
 
 #### Maven setup
@@ -37,7 +37,7 @@ Add the following code to dependencies section of your pom.xml:
 <dependency>
     <groupId>nl.basjes.weddini.throttling</groupId>
     <artifactId>spring-boot-throttling-starter</artifactId>
-    <version>0.0.11</version>
+    <version>0.0.12</version>
 </dependency>
 ```
 
