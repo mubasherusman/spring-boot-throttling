@@ -32,7 +32,7 @@
 			<url>https://maven.pkg.github.com/vicebac/spring-boot-throttling</url>
 		</repository>
 	</distributionManagement>
-  
+
     <properties>
         <target.java.version>11</target.java.version>
         <target.java.release>11</target.java.release>
@@ -41,12 +41,12 @@
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
 
-        <spring-boot.version>2.6.6</spring-boot.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
 
         <!-- In order for everything to work correctly we need at least this version of maven. -->
         <maven.minimal.version>3.5.2</maven.minimal.version>
 
-        <depencency-convergence.phase>validate</depencency-convergence.phase>
+        <dependency-convergence.phase>validate</dependency-convergence.phase>
 
     </properties>
 
@@ -186,7 +186,7 @@
 
                     <execution>
                         <id>dependency-convergence</id>
-                        <phase>${depencency-convergence.phase}</phase>
+                        <phase>${dependency-convergence.phase}</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>

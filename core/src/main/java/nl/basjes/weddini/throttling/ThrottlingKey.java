@@ -43,7 +43,7 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class ThrottlingKey {
 
-    private final static Map<String, Integer> RESOLVED_STRINGS = new HashMap<>();
+    private static final Map<String, Integer> RESOLVED_STRINGS = new HashMap<>();
 
     @Getter private final Method method;
     @Getter private final int limit;
